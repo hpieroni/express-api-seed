@@ -1,0 +1,8 @@
+{
+  "name": "simple-user-article-api",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "prettier": "1.19.1"
+  }
+}
