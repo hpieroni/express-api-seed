@@ -8,13 +8,17 @@
   "scripts": {
     "format": "prettier --write '**/*.{js,json,md}'",
     "lint": "eslint **/*.js",
-    "lint:fix": "eslint --fix **/*.js"
+    "lint:fix": "eslint --fix **/*.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.0",
+    "jest": "^25.1.0",
     "prettier": "1.19.1"
   },
   "dependencies": {}
