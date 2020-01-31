@@ -6,6 +6,7 @@
     "node": ">=12"
   },
   "scripts": {
+    "start": "node app",
     "format": "prettier --write '**/*.{js,json,md}'",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js",
@@ -25,7 +26,9 @@
     "lint-staged": "^10.0.6",
     "prettier": "1.19.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
