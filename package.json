@@ -6,7 +6,7 @@
     "node": ">=12"
   },
   "scripts": {
-    "start": "node app",
+    "start": "node ./bin/www",
     "format": "prettier --write '**/*.{js,json,md}'",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint --fix **/*.js",
