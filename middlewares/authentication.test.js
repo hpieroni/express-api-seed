@@ -19,7 +19,7 @@ describe('Authentication middleware', () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  test('should throw an error if no authorization schema is invalid', () => {
+  test('should throw an error if the authorization schema is invalid', () => {
     req.headers.authorization = 'InvalidShema 123123';
     expect(() => auth(req, {}, next)).toThrow(new Unauthorized('Invalid authorization schema'));
     expect(next).not.toHaveBeenCalled();
