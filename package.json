@@ -8,8 +8,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "format": "prettier --write '**/*.{js,json,md}'",
-    "lint": "eslint **/*.js",
-    "lint:fix": "eslint --fix **/*.js",
+    "lint": "eslint '**/*.js'",
+    "lint:fix": "eslint --fix '**/*.js'",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll"
