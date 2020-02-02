@@ -2,10 +2,7 @@
 
 require('dotenv').config();
 const http = require('http');
-const app = require('../app');
-const config = require('../config');
-
-app.set('port', config.port);
+const { app } = require('../app');
 
 const server = http.createServer(app);
 
@@ -39,6 +36,6 @@ function onListening() {
   console.log(`Server listening on ${bind}`);
 }
 
-server.listen(config.port);
+server.listen(app.get('port'));
 server.on('error', onError);
 server.on('listening', onListening);

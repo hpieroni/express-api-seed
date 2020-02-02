@@ -1,7 +1,16 @@
 const express = require('express');
+const config = require('./config');
+const { authentication, errorHandler } = require('./middlewares');
 
-const app = express();
+const createApp = ({ port, token }) => {
+  return express()
+    .set('port', port)
+    .use(authentication(token))
+    .get('/', (req, res) => res.json({ message: 'server is up and running!' }))
+    .use(errorHandler);
+};
 
-app.get('/', (req, res) => res.send('Hello World!'));
-
-module.exports = app;
+module.exports = {
+  createApp,
+  app: createApp(config)
+};
