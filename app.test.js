@@ -1,7 +1,7 @@
 const request = require('supertest');
-const { createApp } = require('./app');
+const createApp = require('./app');
 
-describe('API app', () => {
+describe('App', () => {
   const config = { token: 'my-token' };
   const app = createApp(config);
 
@@ -16,7 +16,18 @@ describe('API app', () => {
       });
   });
 
-  test('All routes should be authenticated', async () => {
+  test('should return 401 if invalid token is provided', async () => {
+    return request(app)
+      .get('/')
+      .set('Authorization', 'Bearer invalidToken')
+      .expect(401, {
+        status: 401,
+        name: 'UnauthorizedError',
+        message: 'Invalid token'
+      });
+  });
+
+  test('should reply if valid authorization is provided', async () => {
     return request(app)
       .get('/')
       .set('Authorization', `Bearer ${config.token}`)

@@ -1,6 +1,7 @@
 const { Unauthorized } = require('http-errors');
 
 /**
+ * Authentication middleware
  * Validates the presence of a valid token in Authorization header
  *
  * @param {*} req req object

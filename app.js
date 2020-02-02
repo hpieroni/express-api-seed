@@ -1,16 +1,11 @@
 const express = require('express');
-const config = require('./config');
-const { authentication, errorHandler } = require('./middlewares');
+const { authentication, errorHandler, notFound } = require('./middlewares');
 
-const createApp = ({ port, token }) => {
+module.exports = ({ port, token }) => {
   return express()
     .set('port', port)
     .use(authentication(token))
     .get('/', (req, res) => res.json({ message: 'server is up and running!' }))
+    .use(notFound)
     .use(errorHandler);
-};
-
-module.exports = {
-  createApp,
-  app: createApp(config)
 };

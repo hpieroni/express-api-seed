@@ -1,7 +1,7 @@
 const { HttpError } = require('http-errors');
 
 /**
- * Global Error Handler
+ * Global Error Handler middleware
  *
  * @param {*} error received error
  * @param {*} req req object
