@@ -1,33 +1,38 @@
 const { Unauthorized } = require('http-errors');
 
 /**
- * Authentication middleware
- * Validates the presence of a valid token in Authorization header
- *
- * @param {*} req req object
- * @param {*} res res object
- * @param {*} next next function
- *
- * @throws { Unauthorized } 401 HTTP Unauthorized error
+ * @param {string} validToken valid token that middleware will use to check if request is authenticated
+ * @returns {Function} authentication middleware
  */
-const authentication = validToken => (req, res, next) => {
-  const authHeader = req.headers.authorization;
+const authentication = validToken =>
+  /**
+   * Authentication middleware
+   * Validates the presence of a valid token in Authorization header
+   *
+   * @param {Object} req Express req object
+   * @param {Object} res Express res object
+   * @param {Function} next function
+   *
+   * @throws { Unauthorized } 401 HTTP Unauthorized error
+   */
+  (req, res, next) => {
+    const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    throw new Unauthorized('Missing authorization header');
-  }
+    if (!authHeader) {
+      throw new Unauthorized('Missing authorization header');
+    }
 
-  if (!authHeader.startsWith('Bearer ')) {
-    throw new Unauthorized('Invalid authorization schema');
-  }
+    if (!authHeader.startsWith('Bearer ')) {
+      throw new Unauthorized('Invalid authorization schema');
+    }
 
-  const [, token] = authHeader.split(' ');
+    const [, token] = authHeader.split(' ');
 
-  if (token !== validToken) {
-    throw new Unauthorized('Invalid token');
-  }
+    if (token !== validToken) {
+      throw new Unauthorized('Invalid token');
+    }
 
-  next();
-};
+    next();
+  };
 
 module.exports = authentication;

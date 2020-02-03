@@ -4,11 +4,11 @@ const { HttpError } = require('http-errors');
  * Global Error Handler middleware
  *
  * @param {*} error received error
- * @param {*} req req object
- * @param {*} res res object
- * @param {*} next next function
+ * @param {Object} req Express req object
+ * @param {Object} res Express res object
+ * @param {Function} next next function
  *
- * @returns {*} res object
+ * @returns {Object} Express res object
  */
 // eslint-disable-next-line no-unused-vars
 function errorHandler(error, req, res, next) {
