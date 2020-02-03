@@ -33,4 +33,15 @@ describe('App', () => {
       .set('Authorization', `Bearer ${config.token}`)
       .expect(200, { message: 'server is up and running!' });
   });
+
+  test('should send 404 when an invalid resource is requested', async () => {
+    return request(app)
+      .get('/invalid')
+      .set('Authorization', `Bearer ${config.token}`)
+      .expect(404, {
+        status: 404,
+        name: 'NotFoundError',
+        message: 'Not Found'
+      });
+  });
 });
