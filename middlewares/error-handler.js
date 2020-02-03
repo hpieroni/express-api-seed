@@ -13,11 +13,12 @@ const { HttpError } = require('http-errors');
 // eslint-disable-next-line no-unused-vars
 function errorHandler(error, req, res, next) {
   if (error instanceof HttpError) {
-    const { status, name, message } = error;
+    const { status, name, message, detail } = error;
     return res.status(status).json({
       status,
       name,
-      message
+      message,
+      detail
     });
   }
 
