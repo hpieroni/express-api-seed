@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
 const http = require('http');
 const config = require('../config');
 const createApp = require('../app');
+const models = require('../models');
+const Database = require('../services/database');
 
-const app = createApp(config);
+const database = new Database(config.dbConnectionUri, models);
+const app = createApp({ ...config, database });
 const server = http.createServer(app);
 
 function pipeOrPort(address) {
@@ -21,11 +23,11 @@ function onError(error) {
 
   switch (error.code) {
     case 'EACCES':
-      console.error(`${bind} requires elevated privileges.`);
+      console.error(`[HTTP-Server]: ${bind} requires elevated privileges.`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(`${bind} is already in use.`);
+      console.error(`[HTTP-Server]: ${bind} is already in use.`);
       process.exit(1);
       break;
     default:
@@ -35,9 +37,22 @@ function onError(error) {
 
 function onListening() {
   const bind = pipeOrPort(server.address());
-  console.log(`Server listening on ${bind}`);
+  console.log(`[HTTP-Server]: listening on ${bind}`);
 }
 
-server.listen(app.get('port'));
+process.on('SIGINT', () => {
+  database.close();
+  console.info('[Database]: connection closed due to NodeJs process termination');
+  process.exit(0);
+});
+
 server.on('error', onError);
 server.on('listening', onListening);
+
+database.connect(error => {
+  if (error) {
+    console.error(`[Database]: ${error.message}`);
+    process.exit(1);
+  }
+  server.listen(app.get('port'));
+});
