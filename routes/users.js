@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Joi = require('@hapi/joi');
-const userController = require('../controllers/user-controller');
+const asyncHandler = require('express-async-handler');
 const requestValidator = require('../middlewares/request-validator');
+const { create } = require('../controllers/user-controller');
 
 const body = Joi.object({
   name: Joi.string().required(),
@@ -10,6 +11,6 @@ const body = Joi.object({
     .required()
 });
 
-router.post('/', requestValidator({ body }), userController.create);
+router.post('/', requestValidator({ body }), asyncHandler(create));
 
 module.exports = router;
