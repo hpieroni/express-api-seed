@@ -2,7 +2,15 @@ const request = require('supertest');
 const createApp = require('../app');
 
 describe('/v1/users', () => {
-  const config = { token: 'my-token' };
+  const mockDatabase = {
+    models: {
+      User: {
+        create: jest.fn()
+      }
+    }
+  };
+  const { User } = mockDatabase.models;
+  const config = { token: 'my-token', database: mockDatabase };
   const app = createApp(config);
 
   describe('POST /', () => {
@@ -28,6 +36,9 @@ describe('/v1/users', () => {
 
   test('should send the new created user if payload is valid', async () => {
     const body = { name: 'john', avatar: 'http://john.com/avatar' };
+    const newUser = { _id: '1', ...body };
+
+    User.create.mockResolvedValueOnce({ toObject: () => newUser });
 
     const res = await request(app)
       .post('/v1/users')
@@ -35,7 +46,8 @@ describe('/v1/users', () => {
       .set('Accept', 'application/json')
       .set('Authorization', `Bearer ${config.token}`);
 
+    expect(User.create).toHaveBeenCalledWith(body);
     expect(res.status).toBe(200);
-    expect(res.body).toMatchObject({ _id: expect.any(String), ...body });
+    expect(res.body).toEqual(newUser);
   });
 });

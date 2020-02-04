@@ -5,8 +5,11 @@
  * @param {Object} res Express res object
  *
  */
-function create(req, res) {
-  res.json({ _id: '1', ...req.body });
+async function create(req, res) {
+  const db = req.app.get('db');
+  const createdUser = await db.models.User.create(req.body);
+
+  res.json(createdUser.toObject({ versionKey: false }));
 }
 
 module.exports = {
