@@ -1,4 +1,4 @@
-const { Unauthorized } = require('http-errors');
+const { ApiError, ERRORS } = require('../utils/errors');
 
 /**
  * @param {string} validToken valid token that middleware will use to check if request is authenticated
@@ -13,23 +13,23 @@ const authentication = validToken =>
    * @param {Object} res Express res object
    * @param {Function} next function
    *
-   * @throws { Unauthorized } 401 HTTP Unauthorized error
+   * @throws {ApiError}
    */
   (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      throw new Unauthorized('Missing authorization header');
+      throw new ApiError(ERRORS.MISSING_AUTH_HEADER);
     }
 
     if (!authHeader.startsWith('Bearer ')) {
-      throw new Unauthorized('Invalid authorization schema');
+      throw new ApiError(ERRORS.INVALID_AUTH_SCHEMA);
     }
 
     const [, token] = authHeader.split(' ');
 
     if (token !== validToken) {
-      throw new Unauthorized('Invalid token');
+      throw new ApiError(ERRORS.INVALID_AUTH_TOKEN);
     }
 
     next();

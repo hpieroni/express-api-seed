@@ -1,5 +1,6 @@
 const request = require('supertest');
 const createApp = require('../../src/app');
+const { ERRORS } = require('../../src/utils/errors');
 
 describe('/v1/users', () => {
   const mockDatabase = {
@@ -22,13 +23,9 @@ describe('/v1/users', () => {
         .set('Authorization', `Bearer ${config.token}`)
         .expect('Content-Type', /application\/json/)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            body: {
-              avatar: 'is required'
-            }
+          ...ERRORS.INVALID_REQUEST_BODY,
+          details: {
+            avatar: 'is required'
           }
         });
     });

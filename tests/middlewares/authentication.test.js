@@ -1,4 +1,4 @@
-const { Unauthorized } = require('http-errors');
+const { ApiError, ERRORS } = require('../../src/utils/errors');
 const authentication = require('../../src/middlewares/authentication');
 
 describe('Authentication middleware', () => {
@@ -15,19 +15,19 @@ describe('Authentication middleware', () => {
   });
 
   test('should throw an error if no authorization header is provided', () => {
-    expect(() => auth(req, {}, next)).toThrow(new Unauthorized('Missing authorization header'));
+    expect(() => auth(req, {}, next)).toThrow(new ApiError(ERRORS.MISSING_AUTH_HEADER));
     expect(next).not.toHaveBeenCalled();
   });
 
   test('should throw an error if the authorization schema is invalid', () => {
     req.headers.authorization = 'InvalidShema 123123';
-    expect(() => auth(req, {}, next)).toThrow(new Unauthorized('Invalid authorization schema'));
+    expect(() => auth(req, {}, next)).toThrow(new ApiError(ERRORS.INVALID_AUTH_SCHEMA));
     expect(next).not.toHaveBeenCalled();
   });
 
   test('should throw an error if token is invalid', () => {
     req.headers.authorization = 'Bearer invalidToken';
-    expect(() => auth(req, {}, next)).toThrow(new Unauthorized('Invalid token'));
+    expect(() => auth(req, {}, next)).toThrow(new ApiError(ERRORS.INVALID_AUTH_TOKEN));
     expect(next).not.toHaveBeenCalled();
   });
 

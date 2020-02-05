@@ -17,6 +17,7 @@ This is a simple RESTful API that allows you to manage users and articles.
     - [Models](#models)
       - [User](#user)
       - [Article](#article)
+    - [Errors](#errors)
     - [Authentication](#authentication)
     - [Endpoints](#endpoints)
       - [`POST /v1/users`](#post-v1users)
@@ -101,6 +102,39 @@ Also, I didn't implement any kind of foreign key constraints, that is why the ap
 | title  |  String  |
 | text   |  String  |
 | tags   | [String] |
+
+### Errors
+
+The shape of an error is:
+
+```
+{
+  "statusCode": 400,
+  "status": "Bad Request",
+  "appCode": "INVALID_REQUEST_BODY",
+  "message": "Invalid request body",
+  "details": {
+    "name": "is required",
+    "avatar": "must be a valid uri"
+  }
+}
+```
+
+Where:
+
+| HTTP Code | Status Text  | App Code               | Message                               |
+| :-------: | :----------- | :--------------------- | :------------------------------------ |
+|    400    | Bad Request  | INVALID_REQUEST_BODY   | Invalid request body                  |
+|           |              | INVALID_REQUEST_QUERY  | Invalid request querystring           |
+|           |              | INVALID_REQUEST_PARAMS | Invalid request route params          |
+|    401    | Unauthorized | MISSING_AUTH_HEADER    | Missing Authorization header          |
+|           |              | INVALID_AUTH_SCHEMA    | Invalid Authorization header schema   |
+|           |              | INVALID_AUTH_TOKEN     | Invalid token in Authorization header |
+|    404    | Not Found    | NOT_FOUND              | Requested resource was not found      |
+|    500    | Server Error | UNEXPECTED             | Ups! Something went wrong :(          |
+
+Every error can contain a `details` field for more specific information. See the error example above.
+By default an Unexpected error will contain a `message` and `error` (the original) y the `details` section.
 
 ### Authentication
 

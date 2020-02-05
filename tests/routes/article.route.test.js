@@ -1,5 +1,6 @@
 const request = require('supertest');
 const createApp = require('../../src/app');
+const { ERRORS } = require('../../src/utils/errors');
 
 describe('/v1/articles', () => {
   const mockDatabase = {
@@ -35,16 +36,12 @@ describe('/v1/articles', () => {
         .set('Authorization', `Bearer ${config.token}`)
         .expect('Content-Type', /application\/json/)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            body: {
-              userId: 'is required',
-              title: 'is required',
-              text: 'is required',
-              tags: ['must be a string']
-            }
+          ...ERRORS.INVALID_REQUEST_BODY,
+          details: {
+            userId: 'is required',
+            title: 'is required',
+            text: 'is required',
+            tags: ['must be a string']
           }
         });
     });
@@ -73,13 +70,9 @@ describe('/v1/articles', () => {
         .set('Authorization', `Bearer ${config.token}`)
         .expect('Content-Type', /application\/json/)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            params: {
-              id: 'must be an ObjectId'
-            }
+          ...ERRORS.INVALID_REQUEST_PARAMS,
+          details: {
+            id: 'must be an ObjectId'
           }
         });
     });
@@ -92,16 +85,12 @@ describe('/v1/articles', () => {
         .set('Authorization', `Bearer ${config.token}`)
         .expect('Content-Type', /application\/json/)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            body: {
-              userId: 'is required',
-              title: 'is required',
-              text: 'is required',
-              tags: ['must be a string']
-            }
+          ...ERRORS.INVALID_REQUEST_BODY,
+          details: {
+            userId: 'is required',
+            title: 'is required',
+            text: 'is required',
+            tags: ['must be a string']
           }
         });
     });
@@ -116,11 +105,7 @@ describe('/v1/articles', () => {
         .set('Authorization', `Bearer ${config.token}`);
 
       expect(res.status).toBe(404);
-      expect(res.body).toEqual({
-        status: 404,
-        name: 'NotFoundError',
-        message: 'Not Found'
-      });
+      expect(res.body).toEqual(ERRORS.NOT_FOUND);
     });
 
     test('should return updated article', async () => {
@@ -145,13 +130,9 @@ describe('/v1/articles', () => {
         .delete('/v1/articles/invalidObjectId')
         .set('Authorization', `Bearer ${config.token}`)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            params: {
-              id: 'must be an ObjectId'
-            }
+          ...ERRORS.INVALID_REQUEST_PARAMS,
+          details: {
+            id: 'must be an ObjectId'
           }
         });
     });
@@ -166,11 +147,7 @@ describe('/v1/articles', () => {
 
       expect(Article.findByIdAndDelete).toHaveBeenCalledWith(id);
       expect(res.status).toBe(404);
-      expect(res.body).toEqual({
-        status: 404,
-        name: 'NotFoundError',
-        message: 'Not Found'
-      });
+      expect(res.body).toEqual(ERRORS.NOT_FOUND);
     });
 
     test('should confirm deletion with 204 and no content', async () => {
@@ -208,13 +185,9 @@ describe('/v1/articles', () => {
         .get('/v1/articles')
         .set('Authorization', `Bearer ${config.token}`)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            query: {
-              tags: 'is required'
-            }
+          ...ERRORS.INVALID_REQUEST_QUERY,
+          details: {
+            tags: 'is required'
           }
         });
     });
@@ -224,13 +197,9 @@ describe('/v1/articles', () => {
         .get('/v1/articles?tags=,foo,')
         .set('Authorization', `Bearer ${config.token}`)
         .expect(400, {
-          status: 400,
-          name: 'BadRequestError',
-          message: 'Invalid request',
-          detail: {
-            query: {
-              tags: 'must be a string of comma separated values whitout whitespaces'
-            }
+          ...ERRORS.INVALID_REQUEST_QUERY,
+          details: {
+            tags: 'must be a string of comma separated values whitout whitespaces'
           }
         });
     });

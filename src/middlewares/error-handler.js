@@ -1,4 +1,14 @@
-const { HttpError } = require('http-errors');
+const { ApiError, ERRORS } = require('../utils/errors');
+
+function sendError(res, { statusCode, status, appCode, message, details }) {
+  return res.status(statusCode).json({
+    statusCode,
+    status,
+    appCode,
+    message,
+    details
+  });
+}
 
 /**
  * Global Error Handler middleware
@@ -7,27 +17,21 @@ const { HttpError } = require('http-errors');
  * @param {Object} req Express req object
  * @param {Object} res Express res object
  * @param {Function} next next function
- *
- * @returns {Object} Express res object
  */
 // eslint-disable-next-line no-unused-vars
 function errorHandler(error, req, res, next) {
-  if (error instanceof HttpError) {
-    const { status, name, message, detail } = error;
-    return res.status(status).json({
-      status,
-      name,
-      message,
-      detail
-    });
+  if (error instanceof ApiError) {
+    sendError(res, error);
+  } else {
+    // Send an Unxpected Error by default
+    sendError(
+      res,
+      new ApiError(ERRORS.UNEXPECTED, {
+        message: error.message,
+        originalError: error
+      })
+    );
   }
-
-  // Default to 500 error
-  return res.status(500).json({
-    status: 500,
-    name: 'InternalServerError',
-    message: error.message || 'Unexpected error'
-  });
 }
 
 module.exports = errorHandler;

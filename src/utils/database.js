@@ -23,6 +23,7 @@ class Database {
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
         promiseLibrary: global.Promise
       },
       cb

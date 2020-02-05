@@ -1,4 +1,5 @@
-const { NotFound } = require('http-errors');
+const { CREATED, NO_CONTENT } = require('http-status-codes');
+const { ApiError, ERRORS } = require('../utils/errors');
 
 /**
  * Creates a new article
@@ -12,7 +13,7 @@ async function create(req, res) {
   const { Article } = app.get('db').models;
   const createdArticle = await Article.create(body);
 
-  res.status(201).json(createdArticle.toObject());
+  res.status(CREATED).json(createdArticle.toObject());
 }
 
 /**
@@ -21,6 +22,7 @@ async function create(req, res) {
  * @param {Object} req Express req object
  * @param {Object} res Express res object
  *
+ * @throws {ApiError}
  */
 async function update(req, res) {
   const { app, body, params } = req;
@@ -28,7 +30,7 @@ async function update(req, res) {
   const updatedArticle = await Article.findByIdAndUpdate(params.id, body, { new: true });
 
   if (!updatedArticle) {
-    throw new NotFound();
+    throw new ApiError(ERRORS.NOT_FOUND);
   }
 
   res.json(updatedArticle.toObject());
@@ -40,6 +42,7 @@ async function update(req, res) {
  * @param {Object} req Express req object
  * @param {Object} res Express res object
  *
+ * @throws {ApiError}
  */
 async function remove(req, res) {
   const { app, params } = req;
@@ -47,10 +50,10 @@ async function remove(req, res) {
   const removedArticle = await Article.findByIdAndDelete(params.id);
 
   if (!removedArticle) {
-    throw new NotFound();
+    throw new ApiError(ERRORS.NOT_FOUND);
   }
 
-  res.status(204).send();
+  res.status(NO_CONTENT).send();
 }
 
 /**

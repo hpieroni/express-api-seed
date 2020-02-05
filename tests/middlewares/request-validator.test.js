@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-const createError = require('http-errors');
+const { ApiError, ERRORS } = require('../../src/utils/errors');
 const requestValidator = require('../../src/middlewares/request-validator');
 
 describe('Request validator middleware', () => {
@@ -20,13 +20,9 @@ describe('Request validator middleware', () => {
   });
 
   test('should throw an error with explanatory detail for every field according to the schema', () => {
-    const expectedError = createError(400, 'Invalid request', {
-      detail: {
-        body: {
-          name: 'is required',
-          web: 'must be a valid uri'
-        }
-      }
+    const expectedError = new ApiError(ERRORS.INVALID_REQUEST_BODY, {
+      name: 'is required',
+      web: 'must be a valid uri'
     });
     const req = {
       body: {

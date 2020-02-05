@@ -1,4 +1,4 @@
-const { NotFound } = require('http-errors');
+const { ApiError, ERRORS } = require('../utils/errors');
 
 /**
  * Not found middleware
@@ -12,7 +12,7 @@ const { NotFound } = require('http-errors');
  * @throws { NotFound } 404 HTTP NotFound error
  */
 function notFound(req, res, next) {
-  next(new NotFound());
+  next(new ApiError(ERRORS.NOT_FOUND));
 }
 
 module.exports = notFound;

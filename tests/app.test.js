@@ -1,4 +1,5 @@
 const request = require('supertest');
+const { ERRORS } = require('../src/utils/errors');
 const createApp = require('../src/app');
 
 describe('App', () => {
@@ -9,22 +10,14 @@ describe('App', () => {
     return request(app)
       .get('/')
       .expect('Content-Type', /application\/json/)
-      .expect(401, {
-        status: 401,
-        name: 'UnauthorizedError',
-        message: 'Missing authorization header'
-      });
+      .expect(401, ERRORS.MISSING_AUTH_HEADER);
   });
 
   test('should return 401 if invalid token is provided', async () => {
     return request(app)
       .get('/')
       .set('Authorization', 'Bearer invalidToken')
-      .expect(401, {
-        status: 401,
-        name: 'UnauthorizedError',
-        message: 'Invalid token'
-      });
+      .expect(401, ERRORS.INVALID_AUTH_TOKEN);
   });
 
   test('should reply if valid authorization is provided', async () => {
@@ -38,10 +31,6 @@ describe('App', () => {
     return request(app)
       .get('/invalid')
       .set('Authorization', `Bearer ${config.token}`)
-      .expect(404, {
-        status: 404,
-        name: 'NotFoundError',
-        message: 'Not Found'
-      });
+      .expect(404, ERRORS.NOT_FOUND);
   });
 });
