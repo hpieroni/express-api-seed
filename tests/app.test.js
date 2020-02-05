@@ -1,5 +1,5 @@
 const request = require('supertest');
-const createApp = require('./app');
+const createApp = require('../src/app');
 
 describe('App', () => {
   const config = { token: 'my-token' };

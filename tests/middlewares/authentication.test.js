@@ -1,5 +1,5 @@
 const { Unauthorized } = require('http-errors');
-const authentication = require('./authentication');
+const authentication = require('../../src/middlewares/authentication');
 
 describe('Authentication middleware', () => {
   let auth;

@@ -1,4 +1,4 @@
-const { objectId, commaSeparatedValues } = require('./joi-custom-schemas');
+const { objectId, commaSeparatedValues } = require('../../src/utils/joi-custom-schemas');
 
 describe('Joi extension schemas', () => {
   describe('ojectId', () => {

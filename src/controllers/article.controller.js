@@ -65,7 +65,7 @@ async function findByTags(req, res) {
   const { Article } = app.get('db').models;
   const tags = query.tags.split(',');
 
-  const articles = await Article.find({ tags: { $elemMatch: { $in: tags } } });
+  const articles = await Article.find({ tags: { $elemMatch: { $in: tags } } }, '-__v');
 
   res.json(articles);
 }

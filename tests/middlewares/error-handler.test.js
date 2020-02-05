@@ -1,5 +1,5 @@
 const { BadRequest } = require('http-errors');
-const errorHandler = require('./error-handler');
+const errorHandler = require('../../src/middlewares/error-handler');
 
 describe('Error handler middleware', () => {
   const req = {};

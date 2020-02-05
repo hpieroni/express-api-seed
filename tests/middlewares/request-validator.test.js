@@ -1,6 +1,6 @@
 const Joi = require('@hapi/joi');
 const createError = require('http-errors');
-const requestValidator = require('./request-validator');
+const requestValidator = require('../../src/middlewares/request-validator');
 
 describe('Request validator middleware', () => {
   let validator;

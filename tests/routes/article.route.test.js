@@ -1,5 +1,5 @@
 const request = require('supertest');
-const createApp = require('../app');
+const createApp = require('../../src/app');
 
 describe('/v1/articles', () => {
   const mockDatabase = {
@@ -195,7 +195,10 @@ describe('/v1/articles', () => {
         .get(`/v1/articles?tags=foo,cars`)
         .set('Authorization', `Bearer ${config.token}`);
 
-      expect(Article.find).toHaveBeenCalledWith({ tags: { $elemMatch: { $in: ['foo', 'cars'] } } });
+      expect(Article.find).toHaveBeenCalledWith(
+        { tags: { $elemMatch: { $in: ['foo', 'cars'] } } },
+        '-__v'
+      );
       expect(res.status).toBe(200);
       expect(res.body).toEqual([article]);
     });

@@ -3,7 +3,7 @@ const Joi = require('@hapi/joi');
 const asyncHandler = require('express-async-handler');
 const requestValidator = require('../middlewares/request-validator');
 const { objectId, commaSeparatedValues } = require('../utils/joi-custom-schemas');
-const { findByTags, create, update, remove } = require('../controllers/article-controller');
+const { findByTags, create, update, remove } = require('../controllers/article.controller');
 
 const body = Joi.object({
   userId: objectId.required(),
