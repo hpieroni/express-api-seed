@@ -47,7 +47,7 @@ describe('/v1/users', () => {
       .set('Authorization', `Bearer ${config.token}`);
 
     expect(User.create).toHaveBeenCalledWith(body);
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(res.body).toEqual(newUser);
   });
 });

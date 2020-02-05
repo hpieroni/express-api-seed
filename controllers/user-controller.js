@@ -6,10 +6,11 @@
  *
  */
 async function create(req, res) {
-  const db = req.app.get('db');
-  const user = await db.models.User.create(req.body);
+  const { body, app } = req;
+  const { User } = app.get('db').models;
+  const createdUser = await User.create(body);
 
-  res.json(user.toObject());
+  res.status(201).json(createdUser.toObject());
 }
 
 module.exports = {
