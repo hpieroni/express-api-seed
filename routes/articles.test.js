@@ -6,6 +6,7 @@ describe('/v1/articles', () => {
     models: {
       Article: {
         create: jest.fn(),
+        find: jest.fn(),
         findByIdAndUpdate: jest.fn(),
         findByIdAndDelete: jest.fn()
       }
@@ -183,6 +184,52 @@ describe('/v1/articles', () => {
       expect(Article.findByIdAndDelete).toHaveBeenCalledWith(id);
       expect(res.status).toBe(204);
       expect(res.body).toEqual({});
+    });
+  });
+
+  describe('GET /', () => {
+    test('should return all articles that contains the given tags (1 or more)', async () => {
+      Article.find.mockResolvedValueOnce([article]);
+
+      const res = await request(app)
+        .get(`/v1/articles?tags=foo,cars`)
+        .set('Authorization', `Bearer ${config.token}`);
+
+      expect(Article.find).toHaveBeenCalledWith({ tags: { $elemMatch: { $in: ['foo', 'cars'] } } });
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual([article]);
+    });
+
+    test('should require tags querystring variable', async () => {
+      return request(app)
+        .get('/v1/articles')
+        .set('Authorization', `Bearer ${config.token}`)
+        .expect(400, {
+          status: 400,
+          name: 'BadRequestError',
+          message: 'Invalid request',
+          detail: {
+            query: {
+              tags: 'is required'
+            }
+          }
+        });
+    });
+
+    test('should send an error if tag querystring variable is invalid', async () => {
+      return request(app)
+        .get('/v1/articles?tags=,foo,')
+        .set('Authorization', `Bearer ${config.token}`)
+        .expect(400, {
+          status: 400,
+          name: 'BadRequestError',
+          message: 'Invalid request',
+          detail: {
+            query: {
+              tags: 'must be a string of comma separated values whitout whitespaces'
+            }
+          }
+        });
     });
   });
 });

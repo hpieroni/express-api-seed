@@ -53,8 +53,26 @@ async function remove(req, res) {
   res.status(204).send();
 }
 
+/**
+ * Find articles that contains the given tags
+ *
+ * @param {Object} req Express req object
+ * @param {Object} res Express res object
+ *
+ */
+async function findByTags(req, res) {
+  const { app, query } = req;
+  const { Article } = app.get('db').models;
+  const tags = query.tags.split(',');
+
+  const articles = await Article.find({ tags: { $elemMatch: { $in: tags } } });
+
+  res.json(articles);
+}
+
 module.exports = {
   create,
   update,
-  remove
+  remove,
+  findByTags
 };
