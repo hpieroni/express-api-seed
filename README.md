@@ -1,10 +1,10 @@
-# Simple user article API
+# Express API seed
 
-This is a simple RESTful API that allows you to manage users and articles.
+This is a RESTful API seed project. As an example this API allows you to create users and articles.
 
 ## Table of Contents
 
-- [Simple user article API](#simple-user-article-api)
+- [Express API seed](#express-api-seed)
   - [Table of Contents](#table-of-contents)
   - [Prerequisites](#prerequisites)
     - [MongoDB](#mongodb)
@@ -36,6 +36,10 @@ This is a simple RESTful API that allows you to manage users and articles.
         - [Description](#description-3)
         - [Request](#request-3)
         - [Response](#response-3)
+      - [`GET /v1/articles?tags=tag1,tag2,..,tagn`](#get-v1articlestagstag1tag2tagn)
+        - [Description](#description-4)
+        - [Request](#request-4)
+        - [Response](#response-4)
 
 ## Prerequisites
 
@@ -249,4 +253,35 @@ curl -i -X DELETE \
 
 ```
 HTTP/1.1 204 No Content
+```
+
+#### `GET /v1/articles?tags=tag1,tag2,..,tagn`
+
+##### Description
+
+Find articles that contains the given tags
+
+##### Request
+
+```
+curl -i -X GET \
+ -H "Authorization: Bearer myToken" \
+ http://localhost:3000/v1/articles?tags=nature,music,relax
+```
+
+##### Response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[
+  {
+    "_id": "5e3ad860aac3ad522a47ad4c",
+    "userId":"5e3ad6deaac3ad522a47ad4b",
+    "title": "T2"
+    "tags: ["nature"],
+    "text": "Lorem ipsum 2"
+  }
+]
 ```
