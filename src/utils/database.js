@@ -24,14 +24,14 @@ class Database {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
-        promiseLibrary: global.Promise
+        promiseLibrary: global.Promise,
       },
       cb
     );
     this.connection = this.mongoose.connection;
 
     this.connection.on('connected', () => console.info('[Database]: connection was successful'));
-    this.connection.on('error', err => console.error(`[Database]: connection failed: ${err}`));
+    this.connection.on('error', (err) => console.error(`[Database]: connection failed: ${err}`));
     this.connection.on('disconnected', () => console.info('[Database]: disconnected'));
   }
 

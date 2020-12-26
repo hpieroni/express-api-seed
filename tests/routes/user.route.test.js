@@ -6,9 +6,9 @@ describe('/v1/users', () => {
   const mockDatabase = {
     models: {
       User: {
-        create: jest.fn()
-      }
-    }
+        create: jest.fn(),
+      },
+    },
   };
   const { User } = mockDatabase.models;
   const config = { token: 'my-token', database: mockDatabase };
@@ -25,8 +25,8 @@ describe('/v1/users', () => {
         .expect(400, {
           ...ERRORS.INVALID_REQUEST_BODY,
           details: {
-            avatar: 'is required'
-          }
+            avatar: 'is required',
+          },
         });
     });
   });

@@ -9,17 +9,15 @@ const body = Joi.object({
   userId: objectId.required(),
   title: Joi.string().required(),
   text: Joi.string().required(),
-  tags: Joi.array()
-    .items(Joi.string())
-    .required()
+  tags: Joi.array().items(Joi.string()).required(),
 });
 
 const params = Joi.object({
-  id: objectId.required()
+  id: objectId.required(),
 });
 
 const query = Joi.object({
-  tags: commaSeparatedValues.required()
+  tags: commaSeparatedValues.required(),
 });
 
 router

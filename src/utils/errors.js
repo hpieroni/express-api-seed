@@ -8,19 +8,19 @@ const ERRORS = Object.freeze({
     appCode: 'INVALID_REQUEST_BODY',
     statusCode: BAD_REQUEST,
     status: HttpStatus.getStatusText(BAD_REQUEST),
-    message: 'Invalid request body'
+    message: 'Invalid request body',
   },
   INVALID_REQUEST_QUERY: {
     appCode: 'INVALID_REQUEST_QUERY',
     statusCode: BAD_REQUEST,
     status: HttpStatus.getStatusText(BAD_REQUEST),
-    message: 'Invalid request querystring'
+    message: 'Invalid request querystring',
   },
   INVALID_REQUEST_PARAMS: {
     appCode: 'INVALID_REQUEST_PARAMS',
     statusCode: BAD_REQUEST,
     status: HttpStatus.getStatusText(BAD_REQUEST),
-    message: 'Invalid request route params'
+    message: 'Invalid request route params',
   },
 
   // 401
@@ -28,19 +28,19 @@ const ERRORS = Object.freeze({
     appCode: 'MISSING_AUTH_HEADER',
     statusCode: UNAUTHORIZED,
     status: HttpStatus.getStatusText(UNAUTHORIZED),
-    message: 'Missing Authorization header. Please set it with a Bearer token'
+    message: 'Missing Authorization header. Please set it with a Bearer token',
   },
   INVALID_AUTH_SCHEMA: {
     appCode: 'INVALID_AUTH_SCHEMA',
     statusCode: UNAUTHORIZED,
     status: HttpStatus.getStatusText(UNAUTHORIZED),
-    message: 'Invalid Authorization header schema. It should be Bearer'
+    message: 'Invalid Authorization header schema. It should be Bearer',
   },
   INVALID_AUTH_TOKEN: {
     appCode: 'INVALID_AUTH_TOKEN',
     statusCode: UNAUTHORIZED,
     status: HttpStatus.getStatusText(UNAUTHORIZED),
-    message: 'Invalid token in Authorization header'
+    message: 'Invalid token in Authorization header',
   },
 
   // 404
@@ -48,7 +48,7 @@ const ERRORS = Object.freeze({
     appCode: 'NOT_FOUND',
     statusCode: NOT_FOUND,
     status: HttpStatus.getStatusText(NOT_FOUND),
-    message: 'Requested resource was not found'
+    message: 'Requested resource was not found',
   },
 
   // 500
@@ -56,8 +56,8 @@ const ERRORS = Object.freeze({
     appCode: 'UNEXPECTED',
     statusCode: INTERNAL_SERVER_ERROR,
     status: HttpStatus.getStatusText(INTERNAL_SERVER_ERROR),
-    message: 'Ups! Something went wrong :('
-  }
+    message: 'Ups! Something went wrong :(',
+  },
 });
 
 class ApiError extends Error {
@@ -73,5 +73,5 @@ class ApiError extends Error {
 
 module.exports = {
   ApiError,
-  ERRORS
+  ERRORS,
 };

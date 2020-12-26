@@ -9,20 +9,20 @@ describe('/v1/articles', () => {
         create: jest.fn(),
         find: jest.fn(),
         findByIdAndUpdate: jest.fn(),
-        findByIdAndDelete: jest.fn()
-      }
-    }
+        findByIdAndDelete: jest.fn(),
+      },
+    },
   };
   const { Article } = mockDatabase.models;
   const article = {
     userId: '5c0a7922c9d89830f4911426',
     title: 'Title',
     text: 'random text',
-    tags: ['cars', 'technology']
+    tags: ['cars', 'technology'],
   };
   const newArticle = {
     _id: '5e39b7f53afc525306470a21',
-    ...article
+    ...article,
   };
   const config = { token: 'my-token', database: mockDatabase };
   const app = createApp(config);
@@ -41,8 +41,8 @@ describe('/v1/articles', () => {
             userId: 'is required',
             title: 'is required',
             text: 'is required',
-            tags: ['must be a string']
-          }
+            tags: ['must be a string'],
+          },
         });
     });
   });
@@ -72,8 +72,8 @@ describe('/v1/articles', () => {
         .expect(400, {
           ...ERRORS.INVALID_REQUEST_PARAMS,
           details: {
-            id: 'must be an ObjectId'
-          }
+            id: 'must be an ObjectId',
+          },
         });
     });
 
@@ -90,8 +90,8 @@ describe('/v1/articles', () => {
             userId: 'is required',
             title: 'is required',
             text: 'is required',
-            tags: ['must be a string']
-          }
+            tags: ['must be a string'],
+          },
         });
     });
 
@@ -132,8 +132,8 @@ describe('/v1/articles', () => {
         .expect(400, {
           ...ERRORS.INVALID_REQUEST_PARAMS,
           details: {
-            id: 'must be an ObjectId'
-          }
+            id: 'must be an ObjectId',
+          },
         });
     });
 
@@ -187,8 +187,8 @@ describe('/v1/articles', () => {
         .expect(400, {
           ...ERRORS.INVALID_REQUEST_QUERY,
           details: {
-            tags: 'is required'
-          }
+            tags: 'is required',
+          },
         });
     });
 
@@ -199,8 +199,8 @@ describe('/v1/articles', () => {
         .expect(400, {
           ...ERRORS.INVALID_REQUEST_QUERY,
           details: {
-            tags: 'must be a string of comma separated values whitout whitespaces'
-          }
+            tags: 'must be a string of comma separated values whitout whitespaces',
+          },
         });
     });
   });

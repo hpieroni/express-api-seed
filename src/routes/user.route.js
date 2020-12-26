@@ -6,9 +6,7 @@ const { create } = require('../controllers/user.controller');
 
 const body = Joi.object({
   name: Joi.string().required(),
-  avatar: Joi.string()
-    .uri()
-    .required()
+  avatar: Joi.string().uri().required(),
 });
 
 router.post('/', requestValidator({ body }), asyncHandler(create));

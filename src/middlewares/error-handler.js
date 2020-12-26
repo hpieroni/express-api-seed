@@ -6,7 +6,7 @@ function sendError(res, { statusCode, status, appCode, message, details }) {
     status,
     appCode,
     message,
-    details
+    details,
   });
 }
 
@@ -28,7 +28,7 @@ function errorHandler(error, req, res, next) {
       res,
       new ApiError(ERRORS.UNEXPECTED, {
         message: error.message,
-        originalError: error
+        originalError: error,
       })
     );
   }

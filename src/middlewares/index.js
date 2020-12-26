@@ -7,5 +7,5 @@ module.exports = {
   authentication,
   errorHandler,
   notFound,
-  requestValidator
+  requestValidator,
 };

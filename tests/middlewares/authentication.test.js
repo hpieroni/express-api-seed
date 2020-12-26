@@ -9,7 +9,7 @@ describe('Authentication middleware', () => {
   beforeEach(() => {
     auth = authentication('validToken');
     req = {
-      headers: {}
+      headers: {},
     };
     next = jest.fn();
   });

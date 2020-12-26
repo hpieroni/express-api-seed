@@ -8,7 +8,7 @@ describe('Error handler middleware', () => {
   beforeEach(() => {
     res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn().mockReturnThis()
+      json: jest.fn().mockReturnThis(),
     };
   });
 
@@ -34,8 +34,8 @@ describe('Error handler middleware', () => {
         ...ERRORS.UNEXPECTED,
         details: {
           message: 'original error',
-          originalError: error
-        }
+          originalError: error,
+        },
       });
     });
   });

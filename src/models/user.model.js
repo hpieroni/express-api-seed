@@ -5,21 +5,19 @@ module.exports = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     avatar: {
       type: String,
       required: true,
       validate: {
-        validator: val => {
-          const { error } = Joi.string()
-            .uri()
-            .validate(val);
+        validator: (val) => {
+          const { error } = Joi.string().uri().validate(val);
           return !error;
         },
-        message: 'Invalid url'
-      }
-    }
+        message: 'Invalid url',
+      },
+    },
   },
   { toObject: { versionKey: false } }
 );

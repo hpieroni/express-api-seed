@@ -4,7 +4,7 @@ const { ApiError, ERRORS } = require('../utils/errors');
  * @param {string} validToken valid token that middleware will use to check if request is authenticated
  * @returns {Function} authentication middleware
  */
-const authentication = validToken =>
+const authentication = (validToken) =>
   /**
    * Authentication middleware
    * Validates the presence of a valid token in Authorization header

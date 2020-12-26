@@ -3,5 +3,5 @@ const Article = require('./article.model');
 
 module.exports = {
   User,
-  Article
+  Article,
 };

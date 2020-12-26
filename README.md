@@ -63,10 +63,10 @@ Install the latest LTS [Node.js](https://nodejs.org/en/download/) version. If yo
 In order to start the API you need to configure some ENV variables first. You can do this through an **.env** file (check [.env.example](https://github.com/hpieroni/simple-user-article-api/blob/master/.env.example) ).
 
 | Variable          | Default | Description                                                                                                                                      |
-| :---------------- | :-----: | :----------------------------------------------------------------------------------------------------------------------------------------------- |
+| :---------------- | :-----: | :----------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | PORT              |  3000   | Port where the server will listen                                                                                                                |
 | TOKEN             |         | Authentication token                                                                                                                             |
-| DB_CONNECTION_URI |         | Mongo connection URI. _Example:_ `mongodb://localhost:27017/dbTest` See [reference](https://docs.mongodb.com/manual/reference/connection-string) |  |
+| DB_CONNECTION_URI |         | Mongo connection URI. _Example:_ `mongodb://localhost:27017/dbTest` See [reference](https://docs.mongodb.com/manual/reference/connection-string) |     |
 
 Finally run `npm start` and check the console for a message similar to:
 

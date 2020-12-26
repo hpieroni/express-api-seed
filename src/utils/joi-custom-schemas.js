@@ -1,7 +1,7 @@
 const Joi = require('@hapi/joi');
 const { Types } = require('mongoose');
 
-const objectId = Joi.custom(value => {
+const objectId = Joi.custom((value) => {
   if (!Types.ObjectId.isValid(value)) {
     throw new Error();
   }
@@ -14,5 +14,5 @@ const commaSeparatedValues = Joi.string()
 
 module.exports = {
   objectId,
-  commaSeparatedValues
+  commaSeparatedValues,
 };

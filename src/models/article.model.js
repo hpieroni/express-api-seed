@@ -5,19 +5,19 @@ module.exports = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     text: {
       type: String,
-      required: true
+      required: true,
     },
     tags: {
-      type: [String]
-    }
+      type: [String],
+    },
   },
   { toObject: { versionKey: false } }
 );

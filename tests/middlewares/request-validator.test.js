@@ -10,11 +10,9 @@ describe('Request validator middleware', () => {
     validator = requestValidator({
       body: Joi.object({
         name: Joi.string().required(),
-        web: Joi.string()
-          .required()
-          .uri(),
-        age: Joi.number()
-      })
+        web: Joi.string().required().uri(),
+        age: Joi.number(),
+      }),
     });
     next = jest.fn();
   });
@@ -22,12 +20,12 @@ describe('Request validator middleware', () => {
   test('should throw an error with explanatory detail for every field according to the schema', () => {
     const expectedError = new ApiError(ERRORS.INVALID_REQUEST_BODY, {
       name: 'is required',
-      web: 'must be a valid uri'
+      web: 'must be a valid uri',
     });
     const req = {
       body: {
-        web: 'invalidUri'
-      }
+        web: 'invalidUri',
+      },
     };
 
     try {
@@ -43,8 +41,8 @@ describe('Request validator middleware', () => {
     const req = {
       body: {
         name: 'John Doe',
-        web: 'http://johndoe.me'
-      }
+        web: 'http://johndoe.me',
+      },
     };
 
     validator(req, {}, next);
